@@ -1,0 +1,13 @@
+﻿@model Microsoft.AspNet.Identity.EntityFramework.IdentityRole
+@{
+    ViewBag.Title = "EditRole";
+}
+
+<h2>EditRole #@Model.Id</h2>
+@using (Html.BeginForm("EditRole", "Role", FormMethod.Post))
+{
+    <a>Role Name</a>
+    @Html.HiddenFor(m => m.Id)
+    @Html.EditorFor(m => m.Name)
+    <input type="submit" value="Отправить" />
+}

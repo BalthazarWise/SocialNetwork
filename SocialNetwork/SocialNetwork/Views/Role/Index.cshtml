@@ -1,0 +1,19 @@
+﻿@model List<Microsoft.AspNet.Identity.EntityFramework.IdentityRole>
+
+
+@{
+    ViewBag.Title = "Index";
+}
+
+<h2>RoleController</h2>
+<a href="~/Role/CreateRole/">Create Role</a>
+<br />
+<br />
+@foreach (var item in Model)
+{
+    <a>@item.Id</a>
+    <a>@item.Name</a>
+    <a href="@Url.Action("EditRole", "Role", new { roleName = item.Id})">Edit</a>
+    <a href="@Url.Action("DeleteRole", "Role", new { roleName = item.Id})">Delete</a>
+    <br />
+}
