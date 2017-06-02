@@ -9,14 +9,14 @@ using System.Web.Mvc;
 
 namespace SocialNetwork.Controllers
 {
-    [Authorize]
+    [Authorize (Roles = "Admin")]
     public class RoleController : Controller
     {
-        ApplicationDbContext db = new ApplicationDbContext();
+        ApplicationDbContext context = new ApplicationDbContext();
         // GET: Role
         public ActionResult Index()
         {
-            return View(db.Roles.OrderBy(x=>x.Name).ToList());
+            return View(context.Roles.OrderBy(x => x.Name).ToList());
         }
         [HttpGet]
         public ActionResult CreateRole()
@@ -26,11 +26,11 @@ namespace SocialNetwork.Controllers
         [HttpPost]
         public ActionResult CreateRole(string roleName)
         {
-            RoleManager<IdentityRole> manager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
+            RoleManager<IdentityRole> manager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
             if (!manager.RoleExists(roleName))
             {
                 IdentityRole role = new IdentityRole(roleName);
-                manager.Create(role);              
+                manager.Create(role);
                 return RedirectToAction("Index");
             }
             return View();
@@ -38,16 +38,16 @@ namespace SocialNetwork.Controllers
         [HttpGet]
         public ActionResult EditRole(string roleName)
         {
-            return View(db.Roles.Find(roleName));
+            return View(context.Roles.Find(roleName));
         }
         [HttpPost]
         public ActionResult EditRole(IdentityRole role)
         {
-            RoleManager<IdentityRole> manager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
+            RoleManager<IdentityRole> manager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
             if (!manager.RoleExists(role.Name))
             {
-                db.Entry(role).State = System.Data.Entity.EntityState.Modified;
-                db.SaveChanges();
+                context.Entry(role).State = System.Data.Entity.EntityState.Modified;
+                context.SaveChanges();
                 return RedirectToAction("Index");
             }
             return Content("Такая роль уже существует");
@@ -57,15 +57,15 @@ namespace SocialNetwork.Controllers
         {
             try
             {
-                db.Roles.Remove(db.Roles.Find(roleName));
-                db.SaveChanges();
+                context.Roles.Remove(context.Roles.Find(roleName));
+                context.SaveChanges();
                 return RedirectToAction("Index");
             }
             catch (Exception)
             {
                 return Content("Такая роль не существует");
             }
-            
+
             //RoleManager<IdentityRole> manager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
             //if (manager.RoleExists(roleName))
             //{
@@ -74,6 +74,35 @@ namespace SocialNetwork.Controllers
             //    return RedirectToAction("Index");
             //}
             //return Content("Такая роль не существует");
+        }
+        [HttpGet]
+        public ActionResult SetUserRole()
+        {
+            return View(context.Users.OrderBy(x => x.UserName).ToList());
+        }
+        [HttpPost]
+        public ActionResult SetUserRole(string roleName, string userId, string action)
+        {
+            var userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(context));
+            //var roleManager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(context));
+            switch (action)
+            {
+                case "Add Role":
+                    {
+                        userManager.AddToRole(userId, roleName);
+                        break;
+                            
+                    }
+                case "Remove Role":
+                    {
+                        userManager.RemoveFromRole(userId, roleName);
+                        break;
+                    }
+                default:
+                    break;
+            }
+            ;
+            return RedirectToAction("SetUserRole");
         }
     }
 }

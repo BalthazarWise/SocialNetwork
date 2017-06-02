@@ -3,7 +3,12 @@
     ViewBag.Title = "EditRole";
 }
 
+<a href="@Url.Action("Index", "Role")">Index</a> |
+<a href="@Url.Action("CreateRole", "Role")">Create Role</a> |
+<a href="@Url.Action("SetUserRole", "Role")">Set User Role</a>
+<br /><br />
 <h2>EditRole #@Model.Id</h2>
+
 @using (Html.BeginForm("EditRole", "Role", FormMethod.Post))
 {
     <a>Role Name</a>

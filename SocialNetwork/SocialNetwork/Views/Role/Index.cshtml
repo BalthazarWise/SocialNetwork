@@ -5,15 +5,20 @@
     ViewBag.Title = "Index";
 }
 
-<h2>RoleController</h2>
-<a href="~/Role/CreateRole/">Create Role</a>
-<br />
-<br />
+<a href="@Url.Action("Index", "Role")" >Index</a> |
+<a href="@Url.Action("CreateRole", "Role")">Create Role</a> |
+<a href="@Url.Action("SetUserRole", "Role")">Set User Role</a>
+<br /><br />
+<h2>Index</h2>
+
 @foreach (var item in Model)
 {
     <a>@item.Id</a>
     <a>@item.Name</a>
     <a href="@Url.Action("EditRole", "Role", new { roleName = item.Id})">Edit</a>
     <a href="@Url.Action("DeleteRole", "Role", new { roleName = item.Id})">Delete</a>
+    @*<a href="@Url.Action("SetUserRole", "Role",new { roleName = "Admin"}))">Set User Role Admin</a>
+    <a href="@Url.Action("SetUserRole", "Role",new { roleName = "Moderator"}))">Set User Role Moderator</a>
+    <a href="@Url.Action("SetUserRole", "Role",new { roleName = "User"}))">Set User Role User</a>*@
     <br />
 }

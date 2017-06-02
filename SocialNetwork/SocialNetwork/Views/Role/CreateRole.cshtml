@@ -3,7 +3,12 @@
     ViewBag.Title = "CreateRole";
 }
 
-<h2>CreateRole</h2>
+<a href="@Url.Action("Index", "Role")">Index</a> |
+<a href="@Url.Action("CreateRole", "Role")">Create Role</a> |
+<a href="@Url.Action("SetUserRole", "Role")">Set User Role</a>
+<br /><br />
+<h2>Create Role</h2>
+
 <form method="post" >
     <input name="roleName" />
     <input type="submit" value="Отправить" />

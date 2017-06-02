@@ -1,0 +1,25 @@
+﻿@model List<SocialNetwork.Models.ApplicationUser>
+@{
+    ViewBag.Title = "SetUserRole";
+}
+
+<a href="@Url.Action("Index", "Role")">Index</a> |
+<a href="@Url.Action("CreateRole", "Role")">Create Role</a> |
+<a href="@Url.Action("SetUserRole", "Role")">Set User Role</a>
+<br /><br />
+<h2>Set User Role</h2>
+
+@foreach (var item in Model)
+{
+    <a>@item.UserName</a>
+    <a>@item.Roles.Count</a>
+    <form method="post">
+        @item.Id
+        <input type="hidden" size="100" value="@item.Id" name="userId" />
+        <input name="roleName" type="radio" value="Admin" />Admin
+        <input name="roleName" type="radio" value="Moderator" />Moderator
+        <input name="roleName" type="radio" value="User" />User
+        <input name="action" type="submit" value="Add Role"  />
+        <input name="action" type="submit" value="Remove Role" />
+    </form>
+}
