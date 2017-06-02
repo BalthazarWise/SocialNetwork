@@ -1,0 +1,33 @@
+﻿@model SocialNetwork.Models.Group
+@{
+    ViewBag.Title = "Add";
+}
+
+<a href="@Url.Action("Index", "Group")">Index</a> |
+<a href="@Url.Action("Add", "Group")">Add</a> |
+<br /><br />
+<h2>Add</h2>
+@using (Html.BeginForm("Add", "Group", FormMethod.Post))
+{
+    @Html.ValidationSummary(true)
+    <table>
+        <tr>
+            <td>
+                @Html.LabelFor(model => model.Name)
+                @Html.EditorFor(model => model.Name)
+                @Html.ValidationMessageFor(model => model.Name)
+            </td>
+        </tr>
+        <tr>
+            <td>
+                @Html.LabelFor(model => model.Description)
+                @Html.EditorFor(model => model.Description)
+                @Html.ValidationMessageFor(model => model.Description)
+            </td>
+        </tr>
+        <tr>
+            <td><input type="submit" value="Подтвердить" /> </td>
+        </tr>
+    </table>
+}
+

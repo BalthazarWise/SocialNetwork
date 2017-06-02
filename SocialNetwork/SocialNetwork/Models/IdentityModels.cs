@@ -3,6 +3,7 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.EntityFramework;
+using System.Collections.Generic;
 
 namespace SocialNetwork.Models
 {
@@ -16,10 +17,13 @@ namespace SocialNetwork.Models
             // Add custom user claims here
             return userIdentity;
         }
+
+        public virtual ICollection<Group> Groups { get; set; } = new HashSet<Group>();
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
+        public DbSet<Group> Groups { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
@@ -28,6 +32,14 @@ namespace SocialNetwork.Models
         public static ApplicationDbContext Create()
         {
             return new ApplicationDbContext();
+        }
+
+        protected override void OnModelCreating(DbModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<Group>().ToTable("Groups");
+            modelBuilder.Entity<Group>().HasMany(p => p.Users).WithMany(c => c.Groups);
+            // использование Fluent API
+            base.OnModelCreating(modelBuilder);
         }
     }
 }
