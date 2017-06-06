@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using SocialNetwork.Models;
+using Microsoft.AspNet.Identity.EntityFramework;
 
 namespace SocialNetwork.Controllers
 {
@@ -157,7 +158,12 @@ namespace SocialNetwork.Controllers
                 if (result.Succeeded)
                 {
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
-                    
+                    // Автоматическое добавление роли юзера
+                    ApplicationDbContext context = new ApplicationDbContext();
+                    var userManager = new ApplicationUserManager(new UserStore<ApplicationUser>(context));
+                    userManager.AddToRole(user.Id, "User");
+                    // ---
+
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
                     // Send an email with this link
                     // string code = await UserManager.GenerateEmailConfirmationTokenAsync(user.Id);

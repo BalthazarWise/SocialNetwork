@@ -1,19 +1,20 @@
-﻿
+﻿@using Microsoft.AspNet.Identity
 @{
     ViewBag.Title = "Index";
 }
-
-<a href="@Url.Action("Index", "Group")">Index</a> |
-<a href="@Url.Action("Add", "Group")">Add</a> |
-<br /><br />
-<h2>Index</h2>
+<h2>Список групп</h2>
 <table>
+    @if (User.IsInRole("Admin"))
+            {
+        <p><a href="@Url.Action("Add", "Group")">Добавить группу</a></p>
+    }
     <tr>
         <td>
             <p>ID</p>
         </td>
         <td>
             <p>Name</p>
+            
         </td>
         <td>
             <p>Description</p>
@@ -26,17 +27,23 @@
                 <p>@item.Id</p>
             </td>
             <td>
-                <p>@item.Name</p>
+                <p><a href="@Url.Action("Group", "Group", new { item.Id })">@item.Name</a></p>
             </td>
             <td>
                 <p>@item.Description</p>
             </td>
             <td>
-                <p><a href="@Url.Action("Edit", "Group", new { item.Id })">Редактировать</a></p>
+                <p><a href="@Url.Action("Subscribe", "Group", new { item.Id, userId = User.Identity.GetUserId() })">Подписаться</a></p>
             </td>
-            <td>
-                <p><a href="@Url.Action("Delete", "Group", new { item.Id })">Удалить</a></p>
-            </td>
+            @if (User.IsInRole("Admin"))
+            {
+                <td>
+                    <p><a href="@Url.Action("Edit", "Group", new { item.Id })">Редактировать</a></p>
+                </td>
+                <td>
+                    <p><a href="@Url.Action("Delete", "Group", new { item.Id })">Удалить</a></p>
+                </td>
+            }
         </tr>
     }
 </table>

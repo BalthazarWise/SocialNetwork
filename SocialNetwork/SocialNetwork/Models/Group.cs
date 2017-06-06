@@ -22,5 +22,6 @@ namespace SocialNetwork.Models
         public string Description { get; set; }
 
         public virtual ICollection<ApplicationUser> Users { get; set; } = new HashSet<ApplicationUser>();
+        public virtual ICollection<GroupPost> GroupPosts { get; set; } = new HashSet<GroupPost>();
     }
 }

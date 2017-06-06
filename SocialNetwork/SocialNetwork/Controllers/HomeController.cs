@@ -10,14 +10,11 @@ namespace SocialNetwork.Controllers
     [Authorize]
     public class HomeController : Controller
     {
+        ApplicationDbContext context = new ApplicationDbContext();
+
         public ActionResult Index()
         {
-            List<ApplicationUser> users = new List<ApplicationUser>();
-            using (ApplicationDbContext db = new ApplicationDbContext())
-            {
-                users = db.Users.ToList();
-            }
-            return View(users);
+            return View();
         }
     }
 }

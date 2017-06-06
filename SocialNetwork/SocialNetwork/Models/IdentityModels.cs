@@ -17,13 +17,14 @@ namespace SocialNetwork.Models
             // Add custom user claims here
             return userIdentity;
         }
-
         public virtual ICollection<Group> Groups { get; set; } = new HashSet<Group>();
+        public virtual ICollection<GroupPost> GroupPosts { get; set; } = new HashSet<GroupPost>();
     }
 
     public class ApplicationDbContext : IdentityDbContext<ApplicationUser>
     {
         public DbSet<Group> Groups { get; set; }
+        public DbSet<GroupPost> GroupPosts { get; set; }
         public ApplicationDbContext()
             : base("DefaultConnection", throwIfV1Schema: false)
         {
@@ -38,6 +39,9 @@ namespace SocialNetwork.Models
         {
             modelBuilder.Entity<Group>().ToTable("Groups");
             modelBuilder.Entity<Group>().HasMany(p => p.Users).WithMany(c => c.Groups);
+            modelBuilder.Entity<Group>().HasMany(p => p.GroupPosts).WithOptional(p => p.Group);
+            modelBuilder.Entity<GroupPost>().ToTable("GroupPosts");
+            modelBuilder.Entity<GroupPost>().HasMany(p => p.Users).WithMany(c => c.GroupPosts);
             // использование Fluent API
             base.OnModelCreating(modelBuilder);
         }

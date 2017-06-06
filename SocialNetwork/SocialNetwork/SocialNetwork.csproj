@@ -197,6 +197,7 @@
     <Compile Include="App_Start\Startup.Auth.cs" />
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\GroupController.cs" />
+    <Compile Include="Controllers\GroupPostController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
     <Compile Include="Controllers\RoleController.cs" />
@@ -211,9 +212,14 @@
     <Compile Include="Migrations\201706021433054_MigrateDB.Designer.cs">
       <DependentUpon>201706021433054_MigrateDB.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201706061321159_MigrateDB1.cs" />
+    <Compile Include="Migrations\201706061321159_MigrateDB1.Designer.cs">
+      <DependentUpon>201706061321159_MigrateDB1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
     <Compile Include="Models\Group.cs" />
+    <Compile Include="Models\GroupPost.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -284,6 +290,8 @@
     <Content Include="Views\Group\Index.cshtml" />
     <Content Include="Views\Group\Add.cshtml" />
     <Content Include="Views\Group\Edit.cshtml" />
+    <Content Include="Views\Group\Group.cshtml" />
+    <Content Include="Views\GroupPost\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
@@ -302,6 +310,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="Migrations\201706021433054_MigrateDB.resx">
       <DependentUpon>201706021433054_MigrateDB.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201706061321159_MigrateDB1.resx">
+      <DependentUpon>201706061321159_MigrateDB1.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>

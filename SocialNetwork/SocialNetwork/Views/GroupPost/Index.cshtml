@@ -1,0 +1,9 @@
+﻿@{
+    ViewBag.Title = "Index";
+}
+<h2>News</h2>
+@foreach (var item in Model)
+{
+    @item.Post
+    <br />
+}

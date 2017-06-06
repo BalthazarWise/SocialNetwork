@@ -1,4 +1,5 @@
-﻿using SocialNetwork.Models;
+﻿using Microsoft.AspNet.Identity;
+using SocialNetwork.Models;
 using System;
 using System.Collections.Generic;
 using System.Data.Entity;
@@ -8,35 +9,32 @@ using System.Web.Mvc;
 
 namespace SocialNetwork.Controllers
 {
-    public class GroupController : Controller
+    public class GroupPostController : Controller
     {
         ApplicationDbContext context = new ApplicationDbContext();
-        // GET: Group
+        // GET: GroupPost
         public ActionResult Index()
         {
-            IEnumerable<Group> groups = context.Groups.OrderByDescending(x => x.Id);
-            return View(groups);
+            var userId = User.Identity.GetUserId();
+            
+            var gP = context.Groups.Where(e => e.Users.Any(u => u.Id == userId)).SelectMany(p => p.GroupPosts).ToList();
+
+            return View(gP);
         }
-        [Authorize(Roles = "Admin")]
-        [HttpGet]
-        public ActionResult Add()
-        {
-            return View();
-        }
-        [Authorize(Roles = "Admin")]
         [HttpPost]
-        public ActionResult Add(Group add)
+        public ActionResult Add(GroupPost add, int id)
         {
             if (ModelState.IsValid)
             {
-                context.Groups.Add(add);
+                add.Group = context.Groups.Find(id);
+                context.GroupPosts.Add(add);
                 context.SaveChanges();
 
-                return RedirectToAction("Index");
+                return RedirectToAction("Group", "Group", new { id });
             }
             return View(add);
         }
-        [Authorize(Roles = "Admin")]
+        #region Not implementation
         [HttpGet]
         public ActionResult Edit(int? id)
         {
@@ -44,16 +42,15 @@ namespace SocialNetwork.Controllers
             {
                 return HttpNotFound();
             }
-            Group group = context.Groups.Find(id);
-            if (group != null)
+            GroupPost groupPost = context.GroupPosts.Find(id);
+            if (groupPost != null)
             {
-                return View(group);
+                return View(groupPost);
             }
             return HttpNotFound();
         }
-        [Authorize(Roles = "Admin")]
         [HttpPost]
-        public ActionResult Edit(Group edited)
+        public ActionResult Edit(GroupPost edited)
         {
             if (ModelState.IsValid)
             {
@@ -64,19 +61,18 @@ namespace SocialNetwork.Controllers
             }
             return View(edited);
         }
-        [Authorize(Roles = "Admin")]
         [HttpGet]
         public ActionResult Delete(int? id)
         {
             try
             {
-                context.Groups.Remove(context.Groups.Find(id));
+                context.GroupPosts.Remove(context.GroupPosts.Find(id));
                 context.SaveChanges();
                 return RedirectToAction("Index");
             }
             catch (Exception)
             {
-                return Content("Такая группа не существует");
+                return Content("Такой пост не существует");
             }
 
             //RoleManager<IdentityRole> manager = new RoleManager<IdentityRole>(new RoleStore<IdentityRole>(db));
@@ -88,18 +84,6 @@ namespace SocialNetwork.Controllers
             //}
             //return Content("Такая роль не существует");
         }
-        [HttpGet]
-        public ActionResult Group(int? id)
-        {
-            return View(context.Groups.Find(id));
-        }
-        [HttpGet]
-        public ActionResult Subscribe(int? id, string userId)
-        {
-            context.Users.Find(userId).Groups.Add(context.Groups.Find(id));
-            context.SaveChanges();
-            return RedirectToAction("Index");
-        }
-
+        #endregion
     }
 }

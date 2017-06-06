@@ -1,0 +1,19 @@
+﻿@model SocialNetwork.Models.Group
+@{
+    ViewBag.Title = "Group";
+}
+
+<h2>@Model.Name</h2>
+@Model.Description
+<br>
+@using (Html.BeginForm("Add", "GroupPost", FormMethod.Post))
+{
+    <input type="hidden" name="Id" value="@Model.Id" />
+    <input type="text" name="Post" />
+    <input type="submit" value="Add Post" />
+}
+@foreach (var item in Model.GroupPosts)
+{
+    @item.Post
+    <br />
+}
