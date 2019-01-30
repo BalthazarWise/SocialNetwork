@@ -25,6 +25,7 @@
     <UseGlobalApplicationHostFile />
     <NuGetPackageImportStamp>
     </NuGetPackageImportStamp>
+    <Use64BitIISExpress />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -208,17 +209,9 @@
     <Compile Include="Migrations\201705291223454_InitialCreate.Designer.cs">
       <DependentUpon>201705291223454_InitialCreate.cs</DependentUpon>
     </Compile>
-    <Compile Include="Migrations\201706021433054_MigrateDB.cs" />
-    <Compile Include="Migrations\201706021433054_MigrateDB.Designer.cs">
-      <DependentUpon>201706021433054_MigrateDB.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201706061321159_MigrateDB1.cs" />
-    <Compile Include="Migrations\201706061321159_MigrateDB1.Designer.cs">
-      <DependentUpon>201706061321159_MigrateDB1.cs</DependentUpon>
-    </Compile>
-    <Compile Include="Migrations\201706061843005_MigrateDB2.cs" />
-    <Compile Include="Migrations\201706061843005_MigrateDB2.Designer.cs">
-      <DependentUpon>201706061843005_MigrateDB2.cs</DependentUpon>
+    <Compile Include="Migrations\201901301441051_MigrateDB.cs" />
+    <Compile Include="Migrations\201901301441051_MigrateDB.Designer.cs">
+      <DependentUpon>201901301441051_MigrateDB.cs</DependentUpon>
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
@@ -312,14 +305,8 @@
     <EmbeddedResource Include="Migrations\201705291223454_InitialCreate.resx">
       <DependentUpon>201705291223454_InitialCreate.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201706021433054_MigrateDB.resx">
-      <DependentUpon>201706021433054_MigrateDB.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201706061321159_MigrateDB1.resx">
-      <DependentUpon>201706061321159_MigrateDB1.cs</DependentUpon>
-    </EmbeddedResource>
-    <EmbeddedResource Include="Migrations\201706061843005_MigrateDB2.resx">
-      <DependentUpon>201706061843005_MigrateDB2.cs</DependentUpon>
+    <EmbeddedResource Include="Migrations\201901301441051_MigrateDB.resx">
+      <DependentUpon>201901301441051_MigrateDB.cs</DependentUpon>
     </EmbeddedResource>
   </ItemGroup>
   <PropertyGroup>
